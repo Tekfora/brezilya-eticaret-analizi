@@ -1,0 +1,1044 @@
+<title>Brezilya E-Ticaret Panosu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87,600;87,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Yerleşim: üstte tek filtre şeridi, altında gösterge defteri, ardından 12 kolonluk ızgara
+   (aylık ciro tam genişlik; harita 7 + kategoriler 5; teslimat-puan 7 + ödeme 5). */
+:root {
+  --zemin: #eef1f4;
+  --yuzey: #fcfdfd;
+  --murekkep: #12161b;
+  --murekkep-2: #4a535d;
+  --soluk: #6b747e;
+  --izgara: #e2e6ea;
+  --eksen: #c4cbd2;
+  --cizgi: rgba(18, 22, 27, 0.11);
+  --seri-1: #2a78d6;
+  --seri-2: #eb6834;
+  --seri-3: #1baf7a;
+  --seri-4: #eda100;
+  --seri-4-yazi: #0b0b0b;
+  --rampa-1: #cde2fb;
+  --rampa-2: #86b6ef;
+  --rampa-3: #3987e5;
+  --rampa-4: #1c5cab;
+  --rampa-5: #0d366b;
+  --nokta: #c3cad2;
+  --nokta-secili: #4a535d;
+  --notr: #c4cbd2;
+  --secili-zemin: #12161b;
+  --secili-yazi: #fcfdfd;
+  --odak: #2a78d6;
+  --golge: 0 8px 28px rgba(18, 22, 27, 0.14);
+  --f-baslik: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-govde: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --zemin: #0d0f12;
+    --yuzey: #17191d;
+    --murekkep: #eef1f4;
+    --murekkep-2: #b5bdc6;
+    --soluk: #8d96a0;
+    --izgara: #272b31;
+    --eksen: #3a4048;
+    --cizgi: rgba(255, 255, 255, 0.10);
+    --seri-1: #3987e5;
+    --seri-2: #d95926;
+    --seri-3: #199e70;
+    --seri-4: #c98500;
+    --seri-4-yazi: #ffffff;
+    --rampa-1: #1d3b5f;
+    --rampa-2: #1c5cab;
+    --rampa-3: #3987e5;
+    --rampa-4: #86b6ef;
+    --rampa-5: #cde2fb;
+    --nokta: #4a5058;
+    --nokta-secili: #b5bdc6;
+    --notr: #3a4048;
+    --secili-zemin: #eef1f4;
+    --secili-yazi: #17191d;
+    --odak: #6da7ec;
+    --golge: 0 8px 28px rgba(0, 0, 0, 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --zemin: #0d0f12;
+  --yuzey: #17191d;
+  --murekkep: #eef1f4;
+  --murekkep-2: #b5bdc6;
+  --soluk: #8d96a0;
+  --izgara: #272b31;
+  --eksen: #3a4048;
+  --cizgi: rgba(255, 255, 255, 0.10);
+  --seri-1: #3987e5;
+  --seri-2: #d95926;
+  --seri-3: #199e70;
+  --seri-4: #c98500;
+  --seri-4-yazi: #ffffff;
+  --rampa-1: #1d3b5f;
+  --rampa-2: #1c5cab;
+  --rampa-3: #3987e5;
+  --rampa-4: #86b6ef;
+  --rampa-5: #cde2fb;
+  --nokta: #4a5058;
+  --nokta-secili: #b5bdc6;
+  --notr: #3a4048;
+  --secili-zemin: #eef1f4;
+  --secili-yazi: #17191d;
+  --odak: #6da7ec;
+  --golge: 0 8px 28px rgba(0, 0, 0, 0.5);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--zemin);
+  color: var(--murekkep);
+  font-family: var(--f-govde);
+  font-size: 14px;
+  line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.sayfa {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-block: 28px 48px;
+  display: grid;
+  gap: 18px;
+}
+button, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--odak); outline-offset: 2px; }
+
+/* Başlık */
+.ust { display: grid; gap: 6px; }
+.ust-etiket {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--murekkep-2);
+}
+h1 {
+  margin: 0;
+  font-family: var(--f-baslik);
+  font-stretch: 87%;
+  font-weight: 700;
+  font-size: clamp(26px, 3.2vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.ust-aciklama { margin: 0; max-width: 72ch; color: var(--murekkep-2); }
+
+/* Filtre şeridi */
+.filtreler {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 18px;
+  padding: 12px 14px;
+  background: var(--yuzey);
+  border: 1px solid var(--cizgi);
+  border-radius: 10px;
+}
+.alan { display: grid; gap: 4px; }
+.alan > span, .alan-etiket { font-size: 12px; font-weight: 500; color: var(--murekkep-2); }
+select {
+  appearance: none;
+  min-width: 0;
+  max-width: 100%;
+  padding: 7px 30px 7px 10px;
+  background: var(--yuzey) linear-gradient(45deg, transparent 50%, var(--murekkep-2) 50%) no-repeat right 14px center / 5px 5px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--murekkep-2) 50%),
+    linear-gradient(135deg, var(--murekkep-2) 50%, transparent 50%);
+  background-position: right 15px center, right 10px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  border: 1px solid var(--eksen);
+  border-radius: 6px;
+  cursor: pointer;
+}
+select:hover { border-color: var(--murekkep-2); }
+.parcali {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border: 1px solid var(--eksen);
+  border-radius: 7px;
+  background: var(--yuzey);
+}
+.parcali button {
+  padding: 5px 11px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.parcali button:hover { background: var(--izgara); }
+.parcali button[aria-pressed="true"] { background: var(--secili-zemin); color: var(--secili-yazi); }
+.sifirla {
+  margin-left: auto;
+  padding: 7px 12px;
+  border: 1px solid var(--eksen);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+.sifirla:hover:not(:disabled) { border-color: var(--murekkep-2); }
+.sifirla:disabled { opacity: 0.45; cursor: default; }
+.kapsam { margin: -6px 0 0; font-size: 13px; color: var(--murekkep-2); }
+.kapsam strong { color: var(--murekkep); font-weight: 600; }
+
+/* Gösterge defteri: kutular arasındaki 1px boşluk çizgi rengini gösterir */
+.kpiler {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--cizgi);
+  border: 1px solid var(--cizgi);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.kpi { background: var(--yuzey); padding: 14px 16px 10px; display: grid; gap: 2px; align-content: start; }
+.kpi-etiket { font-size: 12.5px; color: var(--murekkep-2); }
+.kpi-deger { font-size: 25px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; white-space: nowrap; }
+.kpi svg { display: block; width: 100%; height: 30px; margin-top: 6px; overflow: visible; }
+
+/* Izgara ve kartlar */
+.izgara { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 18px; }
+.s12 { grid-column: span 12; }
+.s7 { grid-column: span 7; }
+.s5 { grid-column: span 5; }
+.kart {
+  min-width: 0;
+  background: var(--yuzey);
+  border: 1px solid var(--cizgi);
+  border-radius: 10px;
+  padding: 16px 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kart-ust { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 8px 16px; }
+.kart h2 {
+  margin: 0;
+  font-family: var(--f-baslik);
+  font-stretch: 87%;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.kart-alt { margin: 2px 0 0; font-size: 13px; color: var(--murekkep-2); }
+.grafik { position: relative; width: 100%; }
+.grafik svg { display: block; overflow: visible; }
+.grafik text { font-family: var(--f-govde); }
+.tik { font-size: 11px; fill: var(--soluk); font-variant-numeric: tabular-nums; }
+.etiket { font-size: 11.5px; fill: var(--murekkep-2); }
+.deger-etiketi { font-size: 11.5px; font-weight: 600; fill: var(--murekkep); font-variant-numeric: tabular-nums; }
+.lejant { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--murekkep-2); }
+.lejant span { display: inline-flex; align-items: center; gap: 6px; }
+.lejant i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+
+/* Harita */
+.harita { position: relative; width: 100%; }
+.harita canvas, .harita svg { position: absolute; inset: 0; }
+.harita svg g.daire { cursor: pointer; }
+.harita svg g.daire:focus { outline: none; }
+.harita svg g.daire:focus-visible circle.gorunen { stroke: var(--odak); stroke-width: 3; }
+.olcek { display: grid; grid-template-columns: auto minmax(80px, 220px) auto; align-items: center; gap: 8px; font-size: 12px; color: var(--murekkep-2); font-variant-numeric: tabular-nums; }
+.olcek-bar { height: 8px; border-radius: 4px; }
+.olcek-not { font-size: 12px; color: var(--soluk); }
+
+/* Kategori çubukları */
+.cubuklar { display: grid; gap: 2px; }
+.cubuk {
+  display: grid;
+  grid-template-columns: minmax(0, 11.5rem) minmax(0, 1fr) 5.6rem;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 5px 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.cubuk:hover { background: var(--zemin); }
+.cubuk-ad { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.cubuk-iz { height: 14px; }
+.cubuk-dolgu { display: block; height: 100%; min-width: 2px; background: var(--seri-1); border-radius: 0 4px 4px 0; transition: width 0.25s ease; }
+.cubuk[data-soluk="true"] .cubuk-dolgu { opacity: 0.35; }
+.cubuk[aria-pressed="true"] .cubuk-ad { font-weight: 600; }
+.cubuk-deger { text-align: right; font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--murekkep-2); }
+
+/* Ödeme: uzun segmentli çubuk */
+.segmentli { display: flex; gap: 2px; height: 28px; }
+.segment {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-left: 8px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  cursor: default;
+}
+.segment span[hidden] { display: none; }
+.aciklama-metni { margin: 0; font-size: 13px; color: var(--murekkep-2); max-width: 60ch; }
+.ozet-satiri { margin: 0; font-size: 13px; color: var(--murekkep-2); }
+.ozet-satiri strong { color: var(--murekkep); font-variant-numeric: tabular-nums; }
+
+/* Tablo görünümü */
+details { border-top: 1px solid var(--cizgi); padding-top: 8px; }
+summary { cursor: pointer; font-size: 12.5px; color: var(--murekkep-2); width: max-content; }
+summary:hover { color: var(--murekkep); }
+.tablo-kap { overflow-x: auto; margin-top: 8px; max-height: 340px; overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+th, td { padding: 5px 8px; text-align: right; border-bottom: 1px solid var(--izgara); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { position: sticky; top: 0; background: var(--yuzey); font-weight: 600; color: var(--murekkep-2); }
+
+/* İpucu */
+.ipucu {
+  position: fixed;
+  z-index: 20;
+  min-width: 170px;
+  max-width: 280px;
+  padding: 8px 10px;
+  background: var(--yuzey);
+  border: 1px solid var(--cizgi);
+  border-radius: 8px;
+  box-shadow: var(--golge);
+  font-size: 12.5px;
+  pointer-events: none;
+}
+.ip-baslik { font-weight: 600; margin-bottom: 4px; }
+.ip-satir { display: grid; grid-template-columns: 12px auto 1fr; align-items: center; gap: 6px; }
+.ip-satir strong { font-variant-numeric: tabular-nums; font-weight: 600; }
+.ip-anahtar { width: 12px; height: 2px; border-radius: 1px; }
+.ip-etiket { color: var(--murekkep-2); }
+
+.dipnot { font-size: 12.5px; color: var(--murekkep-2); max-width: 78ch; display: grid; gap: 6px; }
+.dipnot h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--murekkep); }
+.dipnot ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+
+@media (max-width: 1000px) {
+  .kpiler { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .s7, .s5 { grid-column: span 12; }
+}
+@media (max-width: 560px) {
+  .kpiler { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi-deger { font-size: 21px; }
+  .sifirla { margin-left: 0; }
+  .cubuk { grid-template-columns: minmax(0, 8rem) minmax(0, 1fr) 4.8rem; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cubuk-dolgu { transition: none; }
+}
+</style>
+
+<div class="sayfa">
+  <header class="ust">
+    <p class="ust-etiket">Bağımsız analiz · Olist açık veri seti (Kaggle)</p>
+    <h1>Brezilya E-Ticaret Panosu</h1>
+    <p class="ust-aciklama" id="ust-aciklama">Teslim edilmiş siparişler. Filtreler tüm grafikleri birlikte günceller; haritada bir eyalete veya listede bir kategoriye tıklayarak da filtreleyebilirsiniz.</p>
+  </header>
+
+  <section class="filtreler" aria-label="Filtreler">
+    <div class="alan">
+      <span class="alan-etiket" id="hazir-etiket">Dönem</span>
+      <div class="parcali" role="group" aria-labelledby="hazir-etiket" id="hazir"></div>
+    </div>
+    <label class="alan"><span>Başlangıç</span><select id="f-bas"></select></label>
+    <label class="alan"><span>Bitiş</span><select id="f-son"></select></label>
+    <label class="alan"><span>Müşteri eyaleti</span><select id="f-eyalet"></select></label>
+    <label class="alan"><span>Kategori</span><select id="f-kategori"></select></label>
+    <button class="sifirla" id="f-sifirla" type="button">Filtreleri temizle</button>
+  </section>
+  <p class="kapsam" id="kapsam" aria-live="polite"></p>
+
+  <section class="kpiler" aria-label="Özet göstergeler" id="kpiler"></section>
+
+  <section class="izgara">
+    <article class="kart s12">
+      <div class="kart-ust">
+        <div>
+          <h2>Aylık ürün cirosu</h2>
+          <p class="kart-alt" id="trend-alt">Kargo hariç, R$</p>
+        </div>
+      </div>
+      <div class="grafik" id="trend-kap"></div>
+      <details><summary>Tablo görünümü</summary><div class="tablo-kap" id="trend-tablo"></div></details>
+    </article>
+
+    <article class="kart s7">
+      <div class="kart-ust">
+        <div>
+          <h2>Eyaletlere göre teslimat</h2>
+          <p class="kart-alt">Daire büyüklüğü sipariş sayısını, rengi seçilen göstergeyi gösterir.</p>
+        </div>
+        <div class="parcali" role="group" aria-label="Harita göstergesi" id="metrik"></div>
+      </div>
+      <div class="harita" id="harita-kap">
+        <canvas id="harita-tuval" aria-hidden="true"></canvas>
+        <svg id="harita-svg" role="group" aria-label="Brezilya eyaletleri haritası"></svg>
+      </div>
+      <div class="olcek" id="olcek"></div>
+      <p class="olcek-not" id="olcek-not"></p>
+      <details><summary>Tablo görünümü</summary><div class="tablo-kap" id="harita-tablo"></div></details>
+    </article>
+
+    <article class="kart s5">
+      <div>
+        <h2>En çok ciro getiren kategoriler</h2>
+        <p class="kart-alt" id="kategori-alt">İlk 10 kategori. Filtrelemek için bir kategoriye tıklayın.</p>
+      </div>
+      <div class="cubuklar" id="kategori-kap"></div>
+      <details><summary>Tablo görünümü</summary><div class="tablo-kap" id="kategori-tablo"></div></details>
+    </article>
+
+    <article class="kart s7">
+      <div>
+        <h2>Teslimat zamanı ve müşteri puanı</h2>
+        <p class="kart-alt">Siparişin tahmini teslim tarihine göre kaç gün erken veya geç ulaştığı ve ortalama puan (1–5)</p>
+      </div>
+      <div class="lejant" id="gecikme-lejant"></div>
+      <div class="grafik" id="gecikme-kap"></div>
+      <p class="ozet-satiri" id="gecikme-ozet"></p>
+      <details><summary>Tablo görünümü</summary><div class="tablo-kap" id="gecikme-tablo"></div></details>
+    </article>
+
+    <article class="kart s5">
+      <div>
+        <h2>Ödeme türleri</h2>
+        <p class="kart-alt">Siparişlerin ana ödeme yöntemine göre dağılımı</p>
+      </div>
+      <div class="segmentli" id="odeme-kap" role="group" aria-label="Ödeme türü payları"></div>
+      <div class="lejant" id="odeme-lejant"></div>
+      <p class="aciklama-metni">Boleto, Brezilya'ya özgü bir ödeme fişidir: müşteri fişi bankada, ATM'de veya internet bankacılığından öder. Ödeme onayı birkaç gün sürebildiği için teslimat da gecikebilir.</p>
+      <details><summary>Tablo görünümü</summary><div class="tablo-kap" id="odeme-tablo"></div></details>
+    </article>
+  </section>
+
+  <footer class="dipnot">
+    <h2>Yöntem notları</h2>
+    <ul>
+      <li>Ocak 2017 – Ağustos 2018 arasında verilmiş ve teslim edilmiş siparişler. Ciro, kargo hariç ürün tutarıdır (R$: Brezilya reali).</li>
+      <li>Her sipariş, en pahalı ürününün kategorisine atanır. Ciroya göre ilk 24 kategori ayrı, kalanlar "Diğer kategoriler" altında gösterilir.</li>
+      <li>Geç teslimat: sipariş, tahmini teslim tarihinden sonraki bir günde ulaştı. Puan: siparişe verilen son değerlendirme.</li>
+      <li>Harita, müşteri posta kodu bölgelerinin konumlarından çizilmiştir. Renk ölçeği yalnızca seçili dönemde en az 30 siparişi olan eyaletleri kapsar.</li>
+    </ul>
+  </footer>
+</div>
+<div class="ipucu" id="ipucu" role="status" hidden></div>
+
+<script>const VERI = /*__VERI__*/null;</script>
+<script>
+(() => {
+  "use strict";
+  const V = VERI;
+  const $ = s => document.querySelector(s);
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const AY_KISA = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"];
+  const AY_UZUN = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+  const aylar = V.meta.aylar;
+  const eyaletler = V.meta.eyaletler;
+  const kategoriler = V.meta.kategoriler;
+  const kovalar = V.meta.kovalar;
+  const odemeAd = V.meta.odeme;
+  const DIGER = kategoriler.findIndex(k => k.kod === "diger");
+  const K = {};
+  V.kolonlar.forEach((k, i) => { K[k] = i; });
+
+  // ---- Biçimlendirme ----
+  const nf = (x, d = 0) => Number(x).toLocaleString("tr-TR", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const yuzde = (x, d = 1) => "%" + nf(x * 100, d);
+  const para = x => x >= 1e6 ? "R$ " + nf(x / 1e6, 2) + " mn" : x >= 1e4 ? "R$ " + nf(x / 1e3, 0) + " bin" : "R$ " + nf(x, 0);
+  const ayAdi = (i, uzun) => {
+    const [y, m] = aylar[i].split("-");
+    return uzun ? AY_UZUN[m - 1] + " " + y : AY_KISA[m - 1] + " " + y.slice(2);
+  };
+  const tire = v => Number.isFinite(v);
+  const renk = ad => getComputedStyle(document.documentElement).getPropertyValue(ad).trim();
+
+  function s(tag, attrs, parent) {
+    const e = document.createElementNS(SVGNS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function h(tag, attrs, text) {
+    const e = document.createElement(tag);
+    for (const k in attrs || {}) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  // ---- Durum ve toplama ----
+  const durum = { bas: 0, son: aylar.length - 1, eyalet: -1, kategori: -1, metrik: "gec" };
+  const bos = () => ({ n: 0, ciro: 0, kargo: 0, gec: 0, puanT: 0, puanN: 0, teslimT: 0 });
+  function ekle(t, r) {
+    t.n += r[K.n]; t.ciro += r[K.ciro]; t.kargo += r[K.kargo]; t.gec += r[K.gec];
+    t.puanT += r[K.puan_t]; t.puanN += r[K.puan_n]; t.teslimT += r[K.teslim_t];
+  }
+  // `haric` verilen boyutun filtresi uygulanmaz: harita tüm eyaletleri, kategori listesi tüm kategorileri gösterir.
+  function topla(haric) {
+    const t = bos();
+    t.ay = aylar.map(bos);
+    t.eyalet = eyaletler.map(bos);
+    t.kategori = kategoriler.map(bos);
+    t.odeme = odemeAd.map(() => 0);
+    t.kovaN = kovalar.map(() => 0);
+    t.kovaT = kovalar.map(() => 0);
+    for (const r of V.satirlar) {
+      const a = r[0], e = r[1], c = r[2];
+      if (a < durum.bas || a > durum.son) continue;
+      if (haric !== "eyalet" && durum.eyalet >= 0 && e !== durum.eyalet) continue;
+      if (haric !== "kategori" && durum.kategori >= 0 && c !== durum.kategori) continue;
+      ekle(t, r); ekle(t.ay[a], r); ekle(t.eyalet[e], r); ekle(t.kategori[c], r);
+      for (let i = 0; i < odemeAd.length; i++) t.odeme[i] += r[K.o0 + i];
+      for (let i = 0; i < kovalar.length; i++) { t.kovaN[i] += r[K.kn0 + i]; t.kovaT[i] += r[K.kt0 + i]; }
+    }
+    return t;
+  }
+  const ort = {
+    gec: t => t.n ? t.gec / t.n : NaN,
+    teslim: t => t.n ? t.teslimT / t.n : NaN,
+    puan: t => t.puanN ? t.puanT / t.puanN : NaN,
+    sepet: t => t.n ? (t.ciro + t.kargo) / t.n : NaN,
+  };
+  const METRIK = {
+    gec: { ad: "Geç teslimat oranı", kisa: "Geç teslimat", bicim: v => yuzde(v), kotuYuksek: true },
+    teslim: { ad: "Ortalama teslim süresi", kisa: "Teslim süresi", bicim: v => nf(v, 1) + " gün", kotuYuksek: true },
+    puan: { ad: "Ortalama puan", kisa: "Puan", bicim: v => nf(v, 2), kotuYuksek: false },
+  };
+
+  // ---- İpucu ----
+  const ipucu = $("#ipucu");
+  function ipucuGoster(baslik, satirlar, x, y) {
+    ipucu.textContent = "";
+    ipucu.append(h("div", { class: "ip-baslik" }, baslik));
+    for (const [deger, etiket, anahtar] of satirlar) {
+      const satir = h("div", { class: "ip-satir" });
+      const k = h("span", { class: "ip-anahtar" });
+      if (anahtar) k.style.background = anahtar;
+      satir.append(k, h("strong", {}, deger), h("span", { class: "ip-etiket" }, etiket));
+      ipucu.append(satir);
+    }
+    ipucu.hidden = false;
+    const r = ipucu.getBoundingClientRect();
+    let l = x + 14, t = y + 14;
+    if (l + r.width > innerWidth - 8) l = x - r.width - 14;
+    if (t + r.height > innerHeight - 8) t = y - r.height - 14;
+    ipucu.style.left = Math.max(8, l) + "px";
+    ipucu.style.top = Math.max(8, t) + "px";
+  }
+  const ipucuGizle = () => { ipucu.hidden = true; };
+  const ortaNokta = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+
+  function tabloYaz(kapId, basliklar, satirlar) {
+    const kap = $(kapId);
+    kap.textContent = "";
+    const tablo = h("table");
+    const ust = h("tr");
+    basliklar.forEach(b => ust.append(h("th", { scope: "col" }, b)));
+    const thead = h("thead"); thead.append(ust);
+    const tbody = h("tbody");
+    satirlar.forEach(r => { const tr = h("tr"); r.forEach(v => tr.append(h("td", {}, v))); tbody.append(tr); });
+    tablo.append(thead, tbody);
+    kap.append(tablo);
+  }
+
+  function olcekAdimlari(max, hedef) {
+    const ham = max / (hedef || 4);
+    const us = Math.pow(10, Math.floor(Math.log10(ham)));
+    const n = ham / us;
+    const adim = (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * us;
+    const ust = Math.ceil(max / adim - 1e-9) * adim;
+    const t = [];
+    for (let v = 0; v <= ust + adim * 1e-6; v += adim) t.push(v);
+    return t;
+  }
+
+  // ---- Filtreler ----
+  const yilAraligi = y => {
+    const ilk = aylar.findIndex(a => a.startsWith(y));
+    let son = ilk;
+    aylar.forEach((a, i) => { if (a.startsWith(y)) son = i; });
+    return [ilk, son];
+  };
+  const HAZIR = [
+    ["Tüm dönem", [0, aylar.length - 1]],
+    ["2017", yilAraligi("2017")],
+    ["2018", yilAraligi("2018")],
+    ["Son 6 ay", [Math.max(0, aylar.length - 6), aylar.length - 1]],
+  ];
+
+  function filtreleriKur() {
+    const hazir = $("#hazir");
+    HAZIR.forEach(([ad, [a, b]], i) => {
+      const btn = h("button", { type: "button", id: "hazir-" + i, "aria-pressed": "false" }, ad);
+      btn.addEventListener("click", () => { durum.bas = a; durum.son = b; ciz(); });
+      hazir.append(btn);
+    });
+    const bas = $("#f-bas"), son = $("#f-son");
+    aylar.forEach((_, i) => { bas.add(new Option(ayAdi(i, true), i)); son.add(new Option(ayAdi(i, true), i)); });
+    const ey = $("#f-eyalet");
+    ey.add(new Option("Tüm eyaletler", -1));
+    eyaletler.map((e, i) => [e, i]).sort((x, y) => x[0].ad.localeCompare(y[0].ad, "tr"))
+      .forEach(([e, i]) => ey.add(new Option(`${e.ad} (${e.kod})`, i)));
+    const kt = $("#f-kategori");
+    kt.add(new Option("Tüm kategoriler", -1));
+    kategoriler.forEach((k, i) => kt.add(new Option(k.ad, i)));
+
+    bas.addEventListener("change", () => { durum.bas = +bas.value; if (durum.son < durum.bas) durum.son = durum.bas; ciz(); });
+    son.addEventListener("change", () => { durum.son = +son.value; if (durum.bas > durum.son) durum.bas = durum.son; ciz(); });
+    ey.addEventListener("change", () => { durum.eyalet = +ey.value; ciz(); });
+    kt.addEventListener("change", () => { durum.kategori = +kt.value; ciz(); });
+    $("#f-sifirla").addEventListener("click", () => {
+      Object.assign(durum, { bas: 0, son: aylar.length - 1, eyalet: -1, kategori: -1 });
+      ciz();
+    });
+
+    const metrik = $("#metrik");
+    Object.entries(METRIK).forEach(([kod, m]) => {
+      const btn = h("button", { type: "button", "data-metrik": kod, "aria-pressed": "false" }, m.kisa);
+      btn.addEventListener("click", () => { durum.metrik = kod; ciz(); });
+      metrik.append(btn);
+    });
+
+    const kpiler = $("#kpiler");
+    KPI.forEach((k, i) => {
+      const kutu = h("div", { class: "kpi" });
+      kutu.append(h("span", { class: "kpi-etiket" }, k.ad), h("span", { class: "kpi-deger", id: "kpi-" + i }, "—"));
+      const iz = s("svg", { id: "kpi-iz-" + i, "aria-hidden": "true" });
+      kutu.append(iz);
+      kpiler.append(kutu);
+    });
+  }
+
+  function kontrolleriEsitle() {
+    $("#f-bas").value = durum.bas;
+    $("#f-son").value = durum.son;
+    $("#f-eyalet").value = durum.eyalet;
+    $("#f-kategori").value = durum.kategori;
+    HAZIR.forEach(([, [a, b]], i) => {
+      $("#hazir-" + i).setAttribute("aria-pressed", String(durum.bas === a && durum.son === b));
+    });
+    document.querySelectorAll("[data-metrik]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.metrik === durum.metrik)));
+    const varsayilan = durum.bas === 0 && durum.son === aylar.length - 1 && durum.eyalet < 0 && durum.kategori < 0;
+    $("#f-sifirla").disabled = varsayilan;
+  }
+
+  function kapsamYaz(t) {
+    const kap = $("#kapsam");
+    kap.textContent = "";
+    const donem = durum.bas === durum.son ? ayAdi(durum.bas, true) : `${ayAdi(durum.bas, true)} – ${ayAdi(durum.son, true)}`;
+    const parcalar = [
+      donem,
+      durum.eyalet >= 0 ? `${eyaletler[durum.eyalet].ad} (${eyaletler[durum.eyalet].kod})` : "tüm eyaletler",
+      durum.kategori >= 0 ? kategoriler[durum.kategori].ad : "tüm kategoriler",
+    ];
+    kap.append("Gösterilen: ", h("strong", {}, parcalar.join(" · ")), " · ");
+    kap.append(t.n ? `${nf(t.n)} sipariş` : "Bu filtrelerle eşleşen sipariş yok. Dönemi genişletin veya bir filtreyi kaldırın.");
+  }
+
+  // ---- Göstergeler ----
+  const KPI = [
+    { ad: "Ürün cirosu", deger: t => t.ciro, bicim: para },
+    { ad: "Sipariş", deger: t => t.n, bicim: v => nf(v) },
+    { ad: "Ortalama sepet", deger: ort.sepet, bicim: v => "R$ " + nf(v, 2) },
+    { ad: "Ortalama puan", deger: ort.puan, bicim: v => nf(v, 2) + " / 5" },
+    { ad: "Geç teslimat", deger: ort.gec, bicim: v => yuzde(v) },
+    { ad: "Ortalama teslim süresi", deger: ort.teslim, bicim: v => nf(v, 1) + " gün" },
+  ];
+  function kpiCiz(t) {
+    KPI.forEach((k, i) => {
+      const v = t.n ? k.deger(t) : NaN;
+      $("#kpi-" + i).textContent = tire(v) ? k.bicim(v) : "—";
+      const iz = $("#kpi-iz-" + i);
+      iz.textContent = "";
+      const nokta = [];
+      for (let a = durum.bas; a <= durum.son; a++) {
+        const d = t.ay[a].n ? k.deger(t.ay[a]) : NaN;
+        if (tire(d)) nokta.push([a, d]);
+      }
+      if (nokta.length < 2) return;
+      const W = iz.clientWidth || 160, H = 30;
+      const ys = nokta.map(p => p[1]);
+      const lo = Math.min(...ys), hi = Math.max(...ys), ar = hi - lo || 1;
+      const x = a => 3 + (a - nokta[0][0]) / (nokta[nokta.length - 1][0] - nokta[0][0]) * (W - 6);
+      const y = v => 4 + (1 - (v - lo) / ar) * (H - 8);
+      iz.setAttribute("viewBox", `0 0 ${W} ${H}`);
+      s("polyline", {
+        points: nokta.map(p => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(" "),
+        fill: "none", stroke: renk("--eksen"), "stroke-width": 1.5, "stroke-linejoin": "round", "stroke-linecap": "round",
+      }, iz);
+      const son = nokta[nokta.length - 1];
+      s("circle", { cx: x(son[0]), cy: y(son[1]), r: 3, fill: renk("--seri-1"), stroke: renk("--yuzey"), "stroke-width": 2 }, iz);
+    });
+  }
+
+  // ---- Aylık ciro ----
+  function trendCiz(t) {
+    const kap = $("#trend-kap");
+    kap.textContent = "";
+    const W = Math.max(280, kap.clientWidth), H = W < 520 ? 220 : 260;
+    const m = { sol: 46, sag: 78, ust: 24, alt: 26 };
+    const idx = [];
+    for (let i = durum.bas; i <= durum.son; i++) idx.push(i);
+    const deg = idx.map(i => t.ay[i].ciro);
+    const tikler = olcekAdimlari(Math.max(...deg, 1), 4);
+    const ymax = tikler[tikler.length - 1];
+    const binlik = ymax >= 1e4;
+    $("#trend-alt").textContent = binlik ? "Kargo hariç, bin R$" : "Kargo hariç, R$";
+    const x = i => idx.length === 1 ? (m.sol + W - m.sag) / 2 : m.sol + (i - durum.bas) / (idx.length - 1) * (W - m.sol - m.sag);
+    const y = v => m.ust + (1 - v / ymax) * (H - m.ust - m.alt);
+    const svg = s("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, tabindex: "0", role: "img",
+      "aria-label": `Aylık ürün cirosu, ${ayAdi(durum.bas, true)} – ${ayAdi(durum.son, true)}. Ok tuşlarıyla aylar arasında gezinebilirsiniz.` }, kap);
+
+    tikler.forEach(v => {
+      s("line", { x1: m.sol, x2: W - m.sag + 8, y1: y(v), y2: y(v), stroke: v === 0 ? renk("--eksen") : renk("--izgara"), "stroke-width": 1 }, svg);
+      const te = s("text", { x: m.sol - 8, y: y(v) + 4, "text-anchor": "end", class: "tik" }, svg);
+      te.textContent = nf(binlik ? v / 1e3 : v);
+    });
+    const adim = Math.max(1, Math.ceil(idx.length / Math.max(1, Math.floor((W - m.sol - m.sag) / 64))));
+    idx.forEach((i, k) => {
+      if (k % adim !== 0 && k !== idx.length - 1) return;
+      if (k !== idx.length - 1 && idx.length - 1 - k < adim && k % adim === 0 && k !== 0) return;
+      const te = s("text", { x: x(i), y: H - 6, "text-anchor": "middle", class: "tik" }, svg);
+      te.textContent = ayAdi(i);
+    });
+
+    const p = idx.map(i => [x(i), y(t.ay[i].ciro)]);
+    if (p.length > 1) {
+      const cizgi = "M" + p.map(q => q[0].toFixed(1) + "," + q[1].toFixed(1)).join("L");
+      s("path", { d: `${cizgi}L${p[p.length - 1][0].toFixed(1)},${y(0)}L${p[0][0].toFixed(1)},${y(0)}Z`, fill: renk("--seri-1"), "fill-opacity": 0.1 }, svg);
+      s("path", { d: cizgi, fill: "none", stroke: renk("--seri-1"), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    }
+    // Black Friday notu (Kasım 2017 görünüyorsa)
+    const bf = aylar.indexOf("2017-11");
+    if (bf >= durum.bas && bf <= durum.son && idx.length >= 4) {
+      const bx = x(bf), by = y(t.ay[bf].ciro);
+      s("line", { x1: bx, x2: bx, y1: by - 6, y2: m.ust - 6, stroke: renk("--eksen"), "stroke-width": 1 }, svg);
+      const te = s("text", { x: bx, y: m.ust - 10, "text-anchor": "middle", class: "etiket" }, svg);
+      te.textContent = "Black Friday";
+    }
+    const sonI = idx[idx.length - 1];
+    const sp = p[p.length - 1];
+    s("circle", { cx: sp[0], cy: sp[1], r: 4, fill: renk("--seri-1"), stroke: renk("--yuzey"), "stroke-width": 2 }, svg);
+    const se = s("text", { x: sp[0] + 9, y: sp[1] + 4, class: "deger-etiketi" }, svg);
+    se.textContent = para(t.ay[sonI].ciro);
+
+    // Artı imleç ve ipucu
+    const imlec = s("line", { y1: m.ust, y2: y(0), stroke: renk("--murekkep-2"), "stroke-width": 1, visibility: "hidden" }, svg);
+    const imNokta = s("circle", { r: 4, fill: renk("--seri-1"), stroke: renk("--yuzey"), "stroke-width": 2, visibility: "hidden" }, svg);
+    let secili = idx.length - 1;
+    function goster(k, cx, cy) {
+      secili = Math.max(0, Math.min(idx.length - 1, k));
+      const i = idx[secili], a = t.ay[i];
+      imlec.setAttribute("x1", x(i)); imlec.setAttribute("x2", x(i)); imlec.setAttribute("visibility", "visible");
+      imNokta.setAttribute("cx", x(i)); imNokta.setAttribute("cy", y(a.ciro)); imNokta.setAttribute("visibility", "visible");
+      ipucuGoster(ayAdi(i, true), [
+        [para(a.ciro), "ürün cirosu", renk("--seri-1")],
+        [nf(a.n), "sipariş"],
+        [tire(ort.sepet(a)) ? "R$ " + nf(ort.sepet(a), 2) : "—", "ortalama sepet"],
+        [tire(ort.gec(a)) ? yuzde(ort.gec(a)) : "—", "geç teslimat"],
+      ], cx, cy);
+    }
+    const alan = s("rect", { x: m.sol, y: m.ust, width: Math.max(1, W - m.sol - m.sag), height: H - m.ust - m.alt, fill: "transparent" }, svg);
+    alan.addEventListener("pointermove", e => {
+      const r = svg.getBoundingClientRect();
+      const px = e.clientX - r.left;
+      const k = idx.length === 1 ? 0 : Math.round((px - m.sol) / (W - m.sol - m.sag) * (idx.length - 1));
+      goster(k, e.clientX, e.clientY);
+    });
+    const gizle = () => { imlec.setAttribute("visibility", "hidden"); imNokta.setAttribute("visibility", "hidden"); ipucuGizle(); };
+    alan.addEventListener("pointerleave", gizle);
+    svg.addEventListener("blur", gizle);
+    svg.addEventListener("focus", () => { const r = svg.getBoundingClientRect(); goster(secili, r.left + x(idx[secili]), r.top + y(t.ay[idx[secili]].ciro)); });
+    svg.addEventListener("keydown", e => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      const k = secili + (e.key === "ArrowRight" ? 1 : -1);
+      const r = svg.getBoundingClientRect();
+      const i = idx[Math.max(0, Math.min(idx.length - 1, k))];
+      goster(k, r.left + x(i), r.top + y(t.ay[i].ciro));
+    });
+
+    tabloYaz("#trend-tablo", ["Ay", "Ürün cirosu (R$)", "Sipariş", "Ortalama sepet (R$)", "Geç teslimat"],
+      idx.map(i => { const a = t.ay[i]; return [ayAdi(i, true), nf(a.ciro), nf(a.n), a.n ? nf(ort.sepet(a), 2) : "—", a.n ? yuzde(ort.gec(a)) : "—"]; }));
+  }
+
+  // ---- Harita ----
+  const hex = c => { const v = c.replace("#", ""); return [0, 2, 4].map(i => parseInt(v.slice(i, i + 2), 16)); };
+  function rampa(tt) {
+    const duraklar = [1, 2, 3, 4, 5].map(i => hex(renk("--rampa-" + i)));
+    const u = Math.max(0, Math.min(1, tt)) * (duraklar.length - 1);
+    const i = Math.min(duraklar.length - 2, Math.floor(u)), f = u - i;
+    const c = duraklar[i].map((v, j) => Math.round(v + (duraklar[i + 1][j] - v) * f));
+    return `rgb(${c[0]},${c[1]},${c[2]})`;
+  }
+  const parlaklik = rgb => {
+    const c = rgb.match(/\d+/g).map(Number).map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  };
+
+  function haritaCiz(t) {
+    const kap = $("#harita-kap"), tuval = $("#harita-tuval"), svg = $("#harita-svg");
+    const LNG0 = -74, LNG1 = -34, LAT0 = -34, LAT1 = 5.5;
+    const cosf = Math.cos(15 * Math.PI / 180);
+    const genis = (LNG1 - LNG0) * cosf, yuk = LAT1 - LAT0;
+    const W = Math.max(260, kap.clientWidth);
+    const H = Math.round(Math.min(W * yuk / genis, 500));
+    kap.style.height = H + "px";
+    const olc = Math.min(W / genis, H / yuk);
+    const ox = (W - genis * olc) / 2, oy = (H - yuk * olc) / 2;
+    const px = lng => ox + (lng - LNG0) * cosf * olc;
+    const py = lat => oy + (LAT1 - lat) * olc;
+
+    const dpr = window.devicePixelRatio || 1;
+    tuval.width = Math.round(W * dpr); tuval.height = Math.round(H * dpr);
+    tuval.style.width = W + "px"; tuval.style.height = H + "px";
+    const cx = tuval.getContext("2d");
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx.clearRect(0, 0, W, H);
+    const N = V.noktalar;
+    const boy = W < 420 ? 1.1 : 1.5;
+    cx.fillStyle = renk("--nokta");
+    for (let i = 0; i < N.length; i += 3) cx.fillRect(px(N[i + 1] / 100) - boy / 2, py(N[i] / 100) - boy / 2, boy, boy);
+    if (durum.eyalet >= 0) {
+      cx.fillStyle = renk("--nokta-secili");
+      for (let i = 0; i < N.length; i += 3) if (N[i + 2] === durum.eyalet) cx.fillRect(px(N[i + 1] / 100) - boy / 2, py(N[i] / 100) - boy / 2, boy, boy);
+    }
+
+    svg.textContent = "";
+    svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const m = METRIK[durum.metrik];
+    const deger = e => ort[durum.metrik](t.eyalet[e]);
+    const yeterli = eyaletler.map((_, e) => t.eyalet[e].n >= 30 && tire(deger(e)));
+    const vals = eyaletler.map((_, e) => deger(e)).filter((v, e) => yeterli[e]);
+    const lo = vals.length ? Math.min(...vals) : 0, hi = vals.length ? Math.max(...vals) : 1;
+    const kotuluk = v => { const u = hi > lo ? (v - lo) / (hi - lo) : 0.5; return m.kotuYuksek ? u : 1 - u; };
+    const maxN = Math.max(1, ...eyaletler.map((_, e) => t.eyalet[e].n));
+    const Rmax = Math.max(14, Math.min(30, W / 20));
+    const sira = eyaletler.map((_, e) => e).filter(e => t.eyalet[e].n > 0)
+      .sort((a, b) => t.eyalet[b].n - t.eyalet[a].n);
+
+    sira.forEach(e => {
+      const ey = eyaletler[e], d = t.eyalet[e];
+      const r = Math.max(3.5, Rmax * Math.sqrt(d.n / maxN));
+      const dolgu = yeterli[e] ? rampa(kotuluk(deger(e))) : renk("--notr");
+      const secili = durum.eyalet === e;
+      const g = s("g", { class: "daire", tabindex: "0", role: "button", "aria-pressed": String(secili),
+        "aria-label": `${ey.ad} (${ey.kod}): ${nf(d.n)} sipariş, ${m.ad.toLowerCase()} ${tire(deger(e)) ? m.bicim(deger(e)) : "yok"}. Bu eyalete göre filtrelemek için seçin.` }, svg);
+      if (durum.eyalet >= 0 && !secili) g.setAttribute("opacity", "0.45");
+      s("circle", { cx: px(ey.lng), cy: py(ey.lat), r: Math.max(r + 4, 12), fill: "transparent" }, g);
+      s("circle", { class: "gorunen", cx: px(ey.lng), cy: py(ey.lat), r, fill: dolgu,
+        stroke: secili ? renk("--murekkep") : renk("--yuzey"), "stroke-width": secili ? 2.5 : 2 }, g);
+      if (r >= 11) {
+        const te = s("text", { x: px(ey.lng), y: py(ey.lat) + 3.8, "text-anchor": "middle", "font-size": 10.5, "font-weight": 600,
+          fill: parlaklik(dolgu.startsWith("rgb") ? dolgu : `rgb(${hex(dolgu).join(",")})`) < 0.4 ? "#ffffff" : "#0b0b0b", "pointer-events": "none" }, g);
+        te.textContent = ey.kod;
+      }
+      const ipucuSatirlari = () => [
+        [nf(d.n), "sipariş"],
+        [para(d.ciro), "ürün cirosu"],
+        [yuzde(ort.gec(d)), "geç teslimat"],
+        [nf(ort.teslim(d), 1) + " gün", "ortalama teslim süresi"],
+        [tire(ort.puan(d)) ? nf(ort.puan(d), 2) : "—", "ortalama puan"],
+      ];
+      g.addEventListener("pointermove", ev => ipucuGoster(`${ey.ad} (${ey.kod})`, ipucuSatirlari(), ev.clientX, ev.clientY));
+      g.addEventListener("pointerleave", ipucuGizle);
+      g.addEventListener("focus", () => { const [a, b] = ortaNokta(g); ipucuGoster(`${ey.ad} (${ey.kod})`, ipucuSatirlari(), a, b); });
+      g.addEventListener("blur", ipucuGizle);
+      const sec = () => { durum.eyalet = secili ? -1 : e; ipucuGizle(); ciz(); };
+      g.addEventListener("click", sec);
+      g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); sec(); } });
+    });
+
+    // Renk ölçeği
+    const olcek = $("#olcek");
+    olcek.textContent = "";
+    const iyi = m.kotuYuksek ? lo : hi, kotu = m.kotuYuksek ? hi : lo;
+    const bar = h("div", { class: "olcek-bar", "aria-hidden": "true" });
+    bar.style.background = `linear-gradient(90deg, ${[0, 0.25, 0.5, 0.75, 1].map(rampa).join(",")})`;
+    olcek.append(h("span", {}, vals.length ? `${m.bicim(iyi)} daha iyi` : "—"), bar, h("span", {}, vals.length ? `${m.bicim(kotu)} daha kötü` : "—"));
+    $("#olcek-not").textContent = `Renk: ${m.ad.toLowerCase()}. Gri daireler: seçili dönemde 30'dan az siparişi olan eyaletler.`;
+
+    tabloYaz("#harita-tablo", ["Eyalet", "Sipariş", "Ürün cirosu (R$)", "Ort. teslim (gün)", "Geç teslimat", "Ort. puan"],
+      sira.map(e => { const d = t.eyalet[e]; return [`${eyaletler[e].ad} (${eyaletler[e].kod})`, nf(d.n), nf(d.ciro), nf(ort.teslim(d), 1), yuzde(ort.gec(d)), tire(ort.puan(d)) ? nf(ort.puan(d), 2) : "—"]; }));
+  }
+
+  // ---- Kategoriler ----
+  function kategoriCiz(t) {
+    const kap = $("#kategori-kap");
+    kap.textContent = "";
+    const liste = t.kategori.map((d, i) => Object.assign({ i }, d)).filter(k => k.n > 0 && k.i !== DIGER)
+      .sort((a, b) => b.ciro - a.ciro);
+    const gosterilen = liste.slice(0, 10);
+    if (durum.kategori >= 0 && !gosterilen.some(k => k.i === durum.kategori)) {
+      const ek = t.kategori[durum.kategori];
+      if (ek.n > 0) gosterilen.push(Object.assign({ i: durum.kategori }, ek));
+    }
+    $("#kategori-alt").textContent = `İlk 10 kategori ("Diğer kategoriler" altındaki ${V.meta.diger_kategori_sayisi} küçük kategori hariç). Filtrelemek için bir kategoriye tıklayın.`;
+    if (!gosterilen.length) { kap.append(h("p", { class: "aciklama-metni" }, "Bu filtrelerle kategori verisi yok.")); }
+    const max = Math.max(1, ...gosterilen.map(k => k.ciro));
+    gosterilen.forEach(k => {
+      const secili = durum.kategori === k.i;
+      const btn = h("button", { type: "button", class: "cubuk", "aria-pressed": String(secili),
+        "data-soluk": String(durum.kategori >= 0 && !secili),
+        "aria-label": `${kategoriler[k.i].ad}: ${para(k.ciro)}, ${nf(k.n)} sipariş. Bu kategoriye göre filtrelemek için seçin.` });
+      const iz = h("span", { class: "cubuk-iz" });
+      const dolgu = h("span", { class: "cubuk-dolgu" });
+      dolgu.style.width = (k.ciro / max * 100).toFixed(2) + "%";
+      iz.append(dolgu);
+      btn.append(h("span", { class: "cubuk-ad" }, kategoriler[k.i].ad), iz, h("span", { class: "cubuk-deger" }, para(k.ciro)));
+      const satirlar = () => [[para(k.ciro), "ürün cirosu", renk("--seri-1")], [nf(k.n), "sipariş"], [yuzde(k.ciro / (t.ciro || 1)), "toplam ciro içindeki payı"]];
+      btn.addEventListener("pointermove", ev => ipucuGoster(kategoriler[k.i].ad, satirlar(), ev.clientX, ev.clientY));
+      btn.addEventListener("pointerleave", ipucuGizle);
+      btn.addEventListener("focus", () => { const r = dolgu.getBoundingClientRect(); ipucuGoster(kategoriler[k.i].ad, satirlar(), r.right, r.top); });
+      btn.addEventListener("blur", ipucuGizle);
+      btn.addEventListener("click", () => { durum.kategori = secili ? -1 : k.i; ipucuGizle(); ciz(); });
+      kap.append(btn);
+    });
+    tabloYaz("#kategori-tablo", ["Kategori", "Ürün cirosu (R$)", "Sipariş", "Ciro payı"],
+      t.kategori.map((d, i) => [i, d]).filter(([, d]) => d.n > 0).sort((a, b) => b[1].ciro - a[1].ciro)
+        .map(([i, d]) => [kategoriler[i].ad, nf(d.ciro), nf(d.n), yuzde(d.ciro / (t.ciro || 1))]));
+  }
+
+  // ---- Teslimat zamanı ve puan ----
+  function gecikmeCiz(t) {
+    const lejant = $("#gecikme-lejant");
+    lejant.textContent = "";
+    [["Zamanında", "--seri-1"], ["Geç", "--seri-2"]].forEach(([ad, r]) => {
+      const sp = h("span"); const i = h("i"); i.style.background = renk(r); sp.append(i, ad); lejant.append(sp);
+    });
+    const kap = $("#gecikme-kap");
+    kap.textContent = "";
+    const W = Math.max(280, kap.clientWidth), H = 236;
+    const m = { sol: 30, sag: 6, ust: 20, alt: 44 };
+    const svg = s("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "group", "aria-label": "Teslimat zamanına göre ortalama puan" }, kap);
+    const y = v => m.ust + (1 - v / 5) * (H - m.ust - m.alt);
+    [0, 1, 2, 3, 4, 5].forEach(v => {
+      s("line", { x1: m.sol, x2: W - m.sag, y1: y(v), y2: y(v), stroke: v === 0 ? renk("--eksen") : renk("--izgara"), "stroke-width": 1 }, svg);
+      const te = s("text", { x: m.sol - 8, y: y(v) + 4, "text-anchor": "end", class: "tik" }, svg);
+      te.textContent = v;
+    });
+    const bant = (W - m.sol - m.sag) / kovalar.length;
+    const bw = Math.min(24, bant * 0.55);
+    kovalar.forEach((kv, i) => {
+      const n = t.kovaN[i], v = n ? t.kovaT[i] / n : NaN;
+      const cxm = m.sol + bant * (i + 0.5);
+      const te = s("text", { x: cxm, y: H - m.alt + 16, "text-anchor": "middle", class: "tik" }, svg);
+      te.textContent = kv.kisa;
+      if (!tire(v)) return;
+      const x0 = cxm - bw / 2, y0 = y(v), taban = y(0), rr = Math.min(4, (taban - y0) / 2);
+      const g = s("g", { tabindex: "0", role: "img", "aria-label": `${kv.ad}: ortalama puan ${nf(v, 2)}, ${nf(n)} sipariş` }, svg);
+      s("rect", { x: m.sol + bant * i, y: m.ust, width: bant, height: taban - m.ust, fill: "transparent" }, g);
+      s("path", { d: `M${x0},${taban}V${y0 + rr}Q${x0},${y0} ${x0 + rr},${y0}H${x0 + bw - rr}Q${x0 + bw},${y0} ${x0 + bw},${y0 + rr}V${taban}Z`,
+        fill: renk(kv.gec ? "--seri-2" : "--seri-1") }, g);
+      const de = s("text", { x: cxm, y: y0 - 6, "text-anchor": "middle", class: "deger-etiketi" }, g);
+      de.textContent = nf(v, 1);
+      const satirlar = () => [[nf(v, 2), "ortalama puan", renk(kv.gec ? "--seri-2" : "--seri-1")], [nf(n), "puanlanan sipariş"]];
+      g.addEventListener("pointermove", ev => ipucuGoster(kv.ad, satirlar(), ev.clientX, ev.clientY));
+      g.addEventListener("pointerleave", ipucuGizle);
+      g.addEventListener("focus", () => { const [a, b] = ortaNokta(g); ipucuGoster(kv.ad, satirlar(), a, b); });
+      g.addEventListener("blur", ipucuGizle);
+    });
+    const ex = s("text", { x: m.sol + (W - m.sol - m.sag) / 2, y: H - 6, "text-anchor": "middle", class: "etiket" }, svg);
+    ex.textContent = "tahmini tarihe göre teslim günü (eksi: erken)";
+
+    let zn = 0, zt = 0, gn = 0, gt = 0;
+    kovalar.forEach((kv, i) => { if (kv.gec) { gn += t.kovaN[i]; gt += t.kovaT[i]; } else { zn += t.kovaN[i]; zt += t.kovaT[i]; } });
+    const oz = $("#gecikme-ozet");
+    oz.textContent = "";
+    if (zn && gn) {
+      oz.append("Ortalama puan: zamanında teslimde ", h("strong", {}, nf(zt / zn, 2)), ", geç teslimde ", h("strong", {}, nf(gt / gn, 2)), ".");
+    }
+    tabloYaz("#gecikme-tablo", ["Teslimat zamanı", "Puanlanan sipariş", "Ortalama puan"],
+      kovalar.map((kv, i) => [kv.ad, nf(t.kovaN[i]), t.kovaN[i] ? nf(t.kovaT[i] / t.kovaN[i], 2) : "—"]));
+  }
+
+  // ---- Ödeme ----
+  function odemeCiz(t) {
+    const kap = $("#odeme-kap"), lejant = $("#odeme-lejant");
+    kap.textContent = ""; lejant.textContent = "";
+    const toplam = t.odeme.reduce((a, b) => a + b, 0);
+    const renkler = ["--seri-1", "--seri-2", "--seri-3", "--seri-4"];
+    odemeAd.forEach((ad, i) => {
+      const sp = h("span"); const k = h("i"); k.style.background = renk(renkler[i]); sp.append(k, ad); lejant.append(sp);
+      const n = t.odeme[i];
+      if (!n) return;
+      const pay = n / toplam;
+      const seg = h("div", { class: "segment", tabindex: "0", role: "img", "aria-label": `${ad}: ${yuzde(pay)}, ${nf(n)} sipariş` });
+      seg.style.flex = `${pay} 1 0`;
+      seg.style.background = renk(renkler[i]);
+      if (i === 3) seg.style.color = renk("--seri-4-yazi");
+      const et = h("span", {}, yuzde(pay));
+      seg.append(et);
+      const satirlar = () => [[yuzde(pay), "siparişlerin payı", renk(renkler[i])], [nf(n), "sipariş"]];
+      seg.addEventListener("pointermove", ev => ipucuGoster(ad, satirlar(), ev.clientX, ev.clientY));
+      seg.addEventListener("pointerleave", ipucuGizle);
+      seg.addEventListener("focus", () => { const [a, b] = ortaNokta(seg); ipucuGoster(ad, satirlar(), a, b); });
+      seg.addEventListener("blur", ipucuGizle);
+      kap.append(seg);
+    });
+    requestAnimationFrame(() => {
+      kap.querySelectorAll(".segment").forEach(seg => {
+        const et = seg.firstChild;
+        et.hidden = false;
+        if (et.getBoundingClientRect().width + 14 > seg.clientWidth) et.hidden = true;
+      });
+    });
+    tabloYaz("#odeme-tablo", ["Ödeme türü", "Sipariş", "Pay"],
+      odemeAd.map((ad, i) => [ad, nf(t.odeme[i]), toplam ? yuzde(t.odeme[i] / toplam) : "—"]));
+  }
+
+  // ---- Çizim ----
+  function ciz() {
+    kontrolleriEsitle();
+    const tum = topla(null);
+    kapsamYaz(tum);
+    kpiCiz(tum);
+    trendCiz(tum);
+    haritaCiz(topla("eyalet"));
+    kategoriCiz(topla("kategori"));
+    gecikmeCiz(tum);
+    odemeCiz(tum);
+  }
+
+  $("#ust-aciklama").textContent =
+    `${ayAdi(0, true)} – ${ayAdi(aylar.length - 1, true)} arasında teslim edilmiş ${nf(V.meta.toplam_siparis)} sipariş. ` +
+    "Filtreler tüm grafikleri birlikte günceller; haritada bir eyalete veya listede bir kategoriye tıklayarak da filtreleyebilirsiniz.";
+  filtreleriKur();
+  ciz();
+
+  let bekleyen = 0;
+  const yenidenCiz = () => { cancelAnimationFrame(bekleyen); bekleyen = requestAnimationFrame(ciz); };
+  let sonGenislik = document.documentElement.clientWidth;
+  new ResizeObserver(() => {
+    const g = document.documentElement.clientWidth;
+    if (g !== sonGenislik) { sonGenislik = g; yenidenCiz(); }
+  }).observe(document.documentElement);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", yenidenCiz);
+  new MutationObserver(yenidenCiz).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(yenidenCiz);
+})();
+</script>

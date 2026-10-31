@@ -1,0 +1,18 @@
+# Ham veri: Kaggle'dan indirilir (bkz. README)
+*.csv
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editör ve işletim sistemi
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
